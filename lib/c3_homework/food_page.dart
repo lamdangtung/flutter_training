@@ -1,18 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_training/c3_homework/big_food_card.dart';
 import 'package:flutter_training/c3_homework/food_card.dart';
 import 'package:flutter_training/c3_homework/food_entity.dart';
-import 'package:flutter_training/utils/app_colors.dart';
-import 'package:flutter_training/utils/app_images.dart';
 import 'package:flutter_training/utils/app_theme.dart';
 import 'package:flutter_training/utils/constant.dart';
 
 class FoodPage extends StatefulWidget {
   const FoodPage({super.key});
-
   @override
   State<FoodPage> createState() => _FoodPageState();
 }
@@ -94,20 +88,20 @@ class _FoodPageState extends State<FoodPage> {
                       fontWeight: FontWeight.w500),
                 ),
                 const Spacer(),
-                const Text(
+                Text(
                   "Most Popular",
                   style: TextStyle(
-                      color: Color(0xFFe3242b),
+                      color: theme.accentIconColor,
                       fontSize: 20,
                       fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(
                   width: 16,
                 ),
-                const Icon(
+                Icon(
                   Icons.sort,
                   size: 28,
-                  color: Color(0xFFe3242b),
+                  color: theme.accentIconColor,
                 )
               ],
             ),
