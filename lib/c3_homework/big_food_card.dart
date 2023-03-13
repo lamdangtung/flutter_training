@@ -11,22 +11,21 @@ class BigFoodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 160,
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(kDefaultBorderRadius),
         color: Colors.pink,
       ),
-      child: Stack(children: [
-        Positioned.fill(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(kDefaultBorderRadius),
-            child: Image.asset(
-              AppImages.backgroundImage,
-              fit: BoxFit.cover,
-            ),
+      child: Stack(fit: StackFit.expand, children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(kDefaultBorderRadius),
+          child: Image.asset(
+            AppImages.backgroundImage,
+            fit: BoxFit.cover,
           ),
         ),
-        Positioned.fill(
-            child: Container(
+        Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultBorderRadius),
             gradient: const LinearGradient(
@@ -34,7 +33,7 @@ class BigFoodCard extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomLeft),
           ),
-        )),
+        ),
         Positioned(
           bottom: kSmallPadding,
           left: kSmallPadding,
