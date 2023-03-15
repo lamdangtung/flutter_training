@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_training/c3_homework/food_page.dart';
+import 'package:flutter_training/c4_homework/c4_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -95,6 +96,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       context, MaterialPageRoute(builder: (_) => FoodPage()));
                 },
                 child: Text("C3 Homework")),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => C4Page()));
+                },
+                child: Text("C4 Homework")),
           ],
         ),
       ),
