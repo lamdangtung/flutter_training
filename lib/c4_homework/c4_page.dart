@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_training/c4_homework/widgets/list_item.dart';
+import 'package:flutter_training/c4_homework/widgets/title_item.dart';
 import 'package:flutter_training/c4_homework/widgets/png_list_builder.dart';
 import 'package:flutter_training/c4_homework/widgets/svg_list_builder.dart';
 import 'package:flutter_training/c4_homework/widgets/url_video_wrapper.dart';
@@ -20,10 +20,53 @@ class C4Page extends StatefulWidget {
 }
 
 class _C4PageState extends State<C4Page> {
-  Widget listBuilder = SVGListBuilder();
-  Widget videoBuilder = YoutubeVideoWrapper();
+  late Widget titlesBuilder = SVGListBuilder();
+  late Widget videoBuilder;
   var isUsingSVG = true;
   var isUsingYoutube = true;
+  late YoutubePlayerController youtubeController;
+  late VideoPlayerController urlVideoController;
+  final urlVideo =
+      "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4";
+  var isLoaded = false;
+  var currentPositon = 0;
+  @override
+  void initState() {
+    super.initState();
+    youtubeController = YoutubePlayerController(
+      initialVideoId: 'YBRkVCRP1Gw',
+      flags: const YoutubePlayerFlags(
+        mute: false,
+        autoPlay: true,
+        disableDragSeek: false,
+        loop: false,
+        isLive: false,
+        forceHD: false,
+        enableCaption: true,
+      ),
+    );
+
+    videoBuilder = YoutubeVideoWrapper(controller: youtubeController);
+
+    urlVideoController = VideoPlayerController.network(urlVideo)
+      ..initialize().then((_) {
+        setState(() {
+          isLoaded = true;
+          urlVideoController.play();
+        });
+      });
+    urlVideoController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    youtubeController.dispose();
+    urlVideoController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,9 +91,9 @@ class _C4PageState extends State<C4Page> {
                             setState(() {
                               isUsingSVG = !isUsingSVG;
                               if (isUsingSVG) {
-                                listBuilder = SVGListBuilder();
+                                titlesBuilder = SVGListBuilder();
                               } else {
-                                listBuilder = PNGListBuilder();
+                                titlesBuilder = PNGListBuilder();
                               }
                             });
                           },
@@ -66,7 +109,7 @@ class _C4PageState extends State<C4Page> {
                       ],
                     ),
                   ),
-                  listBuilder
+                  titlesBuilder
                 ],
               ),
             ),
@@ -85,9 +128,23 @@ class _C4PageState extends State<C4Page> {
                         setState(() {
                           isUsingYoutube = !isUsingYoutube;
                           if (isUsingYoutube) {
-                            videoBuilder = YoutubeVideoWrapper();
+                            videoBuilder = YoutubeVideoWrapper(
+                              controller: youtubeController,
+                            );
+                            urlVideoController.pause();
+                            youtubeController.seekTo(
+                              Duration(seconds: currentPositon),
+                            );
+                            youtubeController.play();
                           } else {
-                            videoBuilder = UrlVideoWrapper();
+                            videoBuilder = UrlVideoWrapper(
+                              controller: urlVideoController,
+                              isLoaded: isLoaded,
+                            );
+                            urlVideoController.play();
+                            youtubeController.pause();
+                            currentPositon =
+                                youtubeController.value.position.inSeconds;
                           }
                         });
                       },

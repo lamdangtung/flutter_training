@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_training/utils/constant.dart';
 
-class ListItem extends StatelessWidget {
+class TitleItem extends StatelessWidget {
   final Widget leading;
   final Widget trailing;
-  const ListItem({super.key, required this.leading, required this.trailing});
+  const TitleItem({super.key, required this.leading, required this.trailing});
 
   @override
   Widget build(BuildContext context) {

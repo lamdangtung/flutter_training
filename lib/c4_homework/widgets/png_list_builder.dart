@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_training/c4_homework/c4_page.dart';
-import 'package:flutter_training/c4_homework/widgets/list_item.dart';
+import 'package:flutter_training/c4_homework/widgets/title_item.dart';
 import 'package:flutter_training/utils/app_images.dart';
 
 class PNGListBuilder extends StatelessWidget {
@@ -17,7 +17,7 @@ class PNGListBuilder extends StatelessWidget {
     return Column(
       children: images
           .map(
-            (e) => ListItem(
+            (e) => TitleItem(
               leading: Image.asset(
                 e,
                 height: 36,

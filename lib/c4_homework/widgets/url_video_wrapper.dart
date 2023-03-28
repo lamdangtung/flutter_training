@@ -1,51 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class UrlVideoWrapper extends StatefulWidget {
-  const UrlVideoWrapper({super.key});
+class UrlVideoWrapper extends StatelessWidget {
+  const UrlVideoWrapper({
+    super.key,
+    required this.controller,
+    required this.isLoaded,
+  });
 
-  @override
-  State<UrlVideoWrapper> createState() => _UrlVideoWrapperState();
-}
+  final VideoPlayerController controller;
 
-class _UrlVideoWrapperState extends State<UrlVideoWrapper> {
-  final urlVideo =
-      "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4";
-  late VideoPlayerController _controller;
-  var isLoaded = false;
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.network(urlVideo)
-      ..initialize().then((_) {
-        setState(() {
-          isLoaded = true;
-          _controller.play();
-        });
-      });
-    _controller.addListener(() {
-      setState(() {});
-    });
-  }
+  final bool isLoaded;
 
   @override
   Widget build(BuildContext context) {
     return Center(
         child: isLoaded
             ? AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
+                aspectRatio: controller.value.aspectRatio,
                 child: VideoPlayer(
-                  _controller,
+                  controller,
                 ),
               )
             : const CircularProgressIndicator());
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    if (_controller != null) {
-      _controller.dispose();
-    }
   }
 }
